@@ -23,22 +23,24 @@ function getController() {
 }
 function getView() {
     let template = `
-    <p>Hello, my name is {{name}}. 
-    I am from {{hometown}}. I have {{kids.length}} kids:</p>
-    <ul>
-        {{#kids}}
-        <li>{{name}} is {{age}}</li>
-        {{/kids}}
-    </ul>
-    <p>Last update {{lastUpdate}}</p>`;
+  <p>Hello, my name is {{name}}.
+  I am from {{hometown}}. I have {{kids.length}} kids:</p>
+  <ul>
+  {{#kids}}
+  <li>{{name}} is {{age}}</li>
+  {{/kids}}
+  </ul>
+  <p>Last update {{lastUpdate}}</p>`;
     return new index_1.HandlebarsView(template);
 }
 let count = 1;
 setInterval(() => {
     console.log(count++);
-    router.routes(new index_1.Route("get", "/", (req, res) => res.send("Hello " + count)), new index_1.Route("get", "/view", (req, res, next) => {
-        res.setHeader("x-test", "ciao");
+    router.routes(new index_1.Route("get", "/*", (req, res, next) => {
         console.log("called middleware");
+        next();
+    }), new index_1.Route("get", "/", (req, res) => res.send("Hello " + count)), new index_1.Route("get", "/view", (req, res, next) => {
+        res.setHeader("x-test", "ciao");
         next();
     }, index_1.MVC.handler(getController(), getView())));
 }, 1000);
