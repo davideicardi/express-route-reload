@@ -12,27 +12,23 @@ const router = new index_1.Router();
 const express = require("express");
 const app = express();
 app.use(router.handler());
-app.listen(process.env.PORT || 3000, () => {
-    console.log("Listening ...");
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Listening at port ${PORT}...`);
 });
-function getController() {
-    return (req) => __awaiter(this, void 0, void 0, function* () {
-        return { name: "Alan", hometown: "Somewhere, TX", lastUpdate: new Date(),
-            kids: [{ name: "Jimmy", age: "12" }, { name: "Sally", age: "4" }] };
-    });
-}
-function getView() {
-    let template = `
-  <p>Hello, my name is {{name}}.
-  I am from {{hometown}}. I have {{kids.length}} kids:</p>
-  <ul>
-  {{#kids}}
-  <li>{{name}} is {{age}}</li>
-  {{/kids}}
-  </ul>
-  <p>Last update {{lastUpdate}}</p>`;
-    return new index_1.HandlebarsView(template);
-}
+const jimmyController = (req) => __awaiter(this, void 0, void 0, function* () {
+    return { name: "Alan", hometown: "Somewhere, TX", lastUpdate: new Date(),
+        kids: [{ name: "Jimmy", age: "12" }, { name: "Sally", age: "4" }] };
+});
+const personDetailView = new index_1.HandlebarsView(`
+<p>Hello, my name is {{name}}.
+I am from {{hometown}}. I have {{kids.length}} kids:</p>
+<ul>
+{{#kids}}
+<li>{{name}} is {{age}}</li>
+{{/kids}}
+</ul>
+<p>Last update {{lastUpdate}}</p>`);
 let count = 1;
 setInterval(() => {
     console.log(count++);
@@ -42,6 +38,6 @@ setInterval(() => {
     }), new index_1.Route("get", "/", (req, res) => res.send("Hello " + count)), new index_1.Route("get", "/view", (req, res, next) => {
         res.setHeader("x-test", "ciao");
         next();
-    }, index_1.MVC.handler(getController(), getView())));
+    }, index_1.MVC.handler(jimmyController, personDetailView)));
 }, 1000);
 //# sourceMappingURL=index.js.map
