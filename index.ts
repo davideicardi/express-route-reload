@@ -1,82 +1,45 @@
 import * as express from "express";
-import {RequestHandler, Router as ExpressRouter, IRouterMatcher, Request} from "express";
-import * as Handlebars from "handlebars";
+import {RequestHandler, Router, IRouterMatcher, Request} from "express";
 
-type PathParams = string | RegExp | (string | RegExp)[];
+export type PathParams = string | RegExp | (string | RegExp)[];
 
-export interface IRoute {
-    method : string;
-    path : PathParams;
-    handlers : RequestHandler[];
+export interface IReloadRoute {
+    method: string;
+    path: PathParams;
+    handlers: RequestHandler[];
 }
 
-export class Route implements IRoute {
-    readonly handlers : RequestHandler[];
+export class ReloadRoute implements IReloadRoute {
+    readonly handlers: RequestHandler[];
 
     constructor(
-        readonly method : string,
-        readonly path : PathParams,
-        ...handlers : RequestHandler[]) {
+        readonly method: string,
+        readonly path: PathParams,
+        ...handlers: RequestHandler[]) {
 
         this.handlers = handlers;
     }
 }
 
-export interface IView {
-    render(model : any, options : any) : Promise<string>;
-}
+export class ReloadRouter {
 
-export interface Controller {
-    (req: Request): Promise<any>;
-}
-
-export class HandlebarsView implements IView {
-    private compiledTemplate : HandlebarsTemplateDelegate;
-
-    constructor(
-        private template : string){
-    }
-
-    async render(model : any, options : any) : Promise<string> {
-        if (!this.compiledTemplate) {
-            this.compiledTemplate = Handlebars.compile(this.template);
-        }
-
-        return this.compiledTemplate(model, options);
-    }
-}
-
-export class MVC {
-    static handler(controller : Controller, view : IView, options? : any) : RequestHandler {
-        return async (req, res) => {
-            let model = await controller(req);
-            let output = await view.render(model, options);
-
-            res.send(output);
-        };
-    }
-}
-
-
-export class Router {
-
-    private router : ExpressRouter;
+    private router: Router;
 
     constructor() {
         this.router = express.Router();
     }
 
-    handler() : RequestHandler {
+    handler(): RequestHandler {
         return (req, res, next) => {
             this.router(req, res, next);
         };
     }
 
-    routes(...routes: IRoute[]) {
+    routes(...routes: IReloadRoute[]) {
         let newRouter = express.Router();
 
-        for (let r of routes){
-            switch (r.method){
+        for (let r of routes) {
+            switch (r.method) {
                 case "get":
                     newRouter.get(r.path, r.handlers);
                     break;

@@ -1,8 +1,9 @@
 {
-  "name": "node-fireplace",
-  "version": "1.0.0",
-  "description": "bla bla bla",
+  "name": "express-route-reload",
+  "version": "0.1.0",
+  "description": "Node.js module for express.js that allow to auto reload routes at runtime. Written in Typescript.",
   "main": "index.js",
+  "typings": "index.d.ts",
   "scripts": {
     "dev-build": "tsc",
     "start-demo": "nodemon ./demo/index.js -w",
@@ -10,22 +11,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/davideicardi/node-fireplace.git"
+    "url": "git+https://github.com/davideicardi/express-route-reload.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/davideicardi/node-fireplace/issues"
+    "url": "https://github.com/davideicardi/express-route-reload/issues"
   },
-  "homepage": "https://github.com/davideicardi/node-fireplace#readme",
+  "homepage": "https://github.com/davideicardi/express-route-reload#readme",
   "devDependencies": {
     "@types/handlebars": "^4.0.31",
+    "handlebars": "^4.0.6",
     "nodemon": "^1.11.0",
+    "tslint": "^4.3.1",
     "typescript": "^2.1.5"
   },
   "dependencies": {
     "@types/express": "^4.0.34",
-    "express": "^4.14.0",
-    "handlebars": "^4.0.6"
+    "express": "^4.14.0"
   }
 }
