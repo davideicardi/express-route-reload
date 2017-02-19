@@ -1,6 +1,6 @@
 {
   "name": "express-route-reload",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Node.js module for express.js that allow to auto reload routes at runtime. Written in Typescript.",
   "main": "index.js",
   "typings": "index.d.ts",
