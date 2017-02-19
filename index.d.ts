@@ -15,5 +15,5 @@ export declare class ReloadRouter {
     private router;
     constructor();
     handler(): RequestHandler;
-    routes(...routes: IReloadRoute[]): void;
+    routes(routes: IReloadRoute[]): void;
 }

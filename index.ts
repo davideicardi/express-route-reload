@@ -35,26 +35,29 @@ export class ReloadRouter {
         };
     }
 
-    routes(...routes: IReloadRoute[]) {
+    routes(routes: IReloadRoute[]) {
         let newRouter = express.Router();
 
         for (let r of routes) {
             switch (r.method) {
-                case "get":
-                    newRouter.get(r.path, r.handlers);
-                    break;
-                case "delete":
-                    newRouter.delete(r.path, r.handlers);
-                    break;
-                case "post":
-                    newRouter.post(r.path, r.handlers);
-                    break;
-                case "options":
-                    newRouter.options(r.path, r.handlers);
-                    break;
-                case "trace":
-                    newRouter.trace(r.path, r.handlers);
-                    break;
+              case "all":
+                  newRouter.all(r.path, r.handlers);
+                  break;
+              case "get":
+                  newRouter.get(r.path, r.handlers);
+                  break;
+              case "delete":
+                  newRouter.delete(r.path, r.handlers);
+                  break;
+              case "post":
+                  newRouter.post(r.path, r.handlers);
+                  break;
+              case "options":
+                  newRouter.options(r.path, r.handlers);
+                  break;
+              case "trace":
+                  newRouter.trace(r.path, r.handlers);
+                  break;
             }
         }
 

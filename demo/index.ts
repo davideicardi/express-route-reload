@@ -17,7 +17,15 @@ setInterval(() => {
 
   console.log(count++);
 
-  reloadRouter.routes(
+  reloadRouter.routes([
+    new ReloadRoute(
+      "all",
+      "/*",
+      (req, res, next) => {
+        console.log("called all middleware");
+        next();
+      }
+    ),
     new ReloadRoute(
       "get",
       "/*",
@@ -31,6 +39,6 @@ setInterval(() => {
       "/",
       (req, res) => res.send("Hello " + count)
     )
-  );
+  ]);
 
 }, 1000);

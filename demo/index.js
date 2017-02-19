@@ -11,9 +11,16 @@ app.listen(PORT, () => {
 let count = 1;
 setInterval(() => {
     console.log(count++);
-    reloadRouter.routes(new index_1.ReloadRoute("get", "/*", (req, res, next) => {
-        console.log("called middleware");
-        next();
-    }), new index_1.ReloadRoute("get", "/", (req, res) => res.send("Hello " + count)));
+    reloadRouter.routes([
+        new index_1.ReloadRoute("all", "/*", (req, res, next) => {
+            console.log("called all middleware");
+            next();
+        }),
+        new index_1.ReloadRoute("get", "/*", (req, res, next) => {
+            console.log("called middleware");
+            next();
+        }),
+        new index_1.ReloadRoute("get", "/", (req, res) => res.send("Hello " + count))
+    ]);
 }, 1000);
 //# sourceMappingURL=index.js.map

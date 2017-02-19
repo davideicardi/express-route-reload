@@ -17,10 +17,13 @@ class ReloadRouter {
             this.router(req, res, next);
         };
     }
-    routes(...routes) {
+    routes(routes) {
         let newRouter = express.Router();
         for (let r of routes) {
             switch (r.method) {
+                case "all":
+                    newRouter.all(r.path, r.handlers);
+                    break;
                 case "get":
                     newRouter.get(r.path, r.handlers);
                     break;
