@@ -13,7 +13,7 @@ Written and published as a typescript module.
 ## Usage
 
 
-    import {ReloadRouter, ReloadRoute} from "express-route-reload";
+    import {ReloadRouter} from "../index";
     import * as express from "express";
 
     const reloadRouter = new ReloadRouter();
@@ -30,22 +30,14 @@ Written and published as a typescript module.
     let count = 1;
     setInterval(() => {
 
-      console.log(count++);
+      const newRouter = express.Router();
+      for (let i = 0; i < count; i++) {
+        newRouter.get("/" + i, (req, res, next) => {
+          res.send("Hello " + i);
+        });
+      }
 
-      reloadRouter.routes(
-        new ReloadRoute(
-          "get",
-          "/*",
-          (req, res, next) => {
-            console.log("called middleware");
-            next();
-          }
-        ),
-        new ReloadRoute(
-          "get",
-          "/",
-          (req, res) => res.send("Hello " + count)
-        )
-      );
+      reloadRouter.reload([newRouter]);
+    }, 2000);
 
-    }, 1000);
+Each 2 seconds I create a new route: "/1", "/2", "/3", ...

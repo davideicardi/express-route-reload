@@ -1,13 +1,6 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
-class ReloadRoute {
-    constructor(method, path, ...handlers) {
-        this.method = method;
-        this.path = path;
-        this.handlers = handlers;
-    }
-}
-exports.ReloadRoute = ReloadRoute;
 class ReloadRouter {
     constructor() {
         this.router = express.Router();
@@ -17,30 +10,9 @@ class ReloadRouter {
             this.router(req, res, next);
         };
     }
-    routes(routes) {
-        let newRouter = express.Router();
-        for (let r of routes) {
-            switch (r.method) {
-                case "all":
-                    newRouter.all(r.path, r.handlers);
-                    break;
-                case "get":
-                    newRouter.get(r.path, r.handlers);
-                    break;
-                case "delete":
-                    newRouter.delete(r.path, r.handlers);
-                    break;
-                case "post":
-                    newRouter.post(r.path, r.handlers);
-                    break;
-                case "options":
-                    newRouter.options(r.path, r.handlers);
-                    break;
-                case "trace":
-                    newRouter.trace(r.path, r.handlers);
-                    break;
-            }
-        }
+    reload(handlers) {
+        const newRouter = express.Router();
+        newRouter.use(handlers);
         this.router = newRouter;
     }
 }
