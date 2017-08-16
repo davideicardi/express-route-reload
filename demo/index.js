@@ -10,9 +10,10 @@ app.listen(PORT, () => {
     console.log(`Listening at port ${PORT}...`);
 });
 // This interval is to demostrate that I can change routes dynamically
-let count = 1;
+let count = 0;
 setInterval(() => {
-    console.log(count++);
+    console.log("/" + count);
+    count++;
     const newRouter = express.Router();
     newRouter.all("/*", (req, res, next) => {
         console.log("called all middleware");

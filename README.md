@@ -27,8 +27,10 @@ Written and published as a typescript module.
     });
 
     // This interval is to demostrate that I can change routes dynamically
-    let count = 1;
+    let count = 0;
     setInterval(() => {
+      console.log("/" + count);
+      count++;
 
       const newRouter = express.Router();
       for (let i = 0; i < count; i++) {
