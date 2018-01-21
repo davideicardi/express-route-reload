@@ -1,6 +1,6 @@
 # express-route-reload
 
-Node.js module for express.js that allow to auto reload routes at runtime.
+Node.js module for express.js that allow to reload routes, Router objects, at runtime.
 
 Idea based on: [Removing routes at runtime](https://github.com/expressjs/express/issues/2596).
 
