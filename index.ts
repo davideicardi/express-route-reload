@@ -18,7 +18,9 @@ export class ReloadRouter {
 	reload(handlers: RequestHandler[]) {
 		const newRouter = express.Router();
 
-		newRouter.use(handlers);
+		if (handlers.length) {
+			newRouter.use(handlers);
+		}
 
 		this.router = newRouter;
 	}

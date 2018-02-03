@@ -12,7 +12,9 @@ class ReloadRouter {
     }
     reload(handlers) {
         const newRouter = express.Router();
-        newRouter.use(handlers);
+        if (handlers.length) {
+            newRouter.use(handlers);
+        }
         this.router = newRouter;
     }
 }
